@@ -21,8 +21,9 @@
     "jsx": "preserve",
     "paths": {
       "@lib/*": [ "lib/*" ],
-      "@pages/*": [ "pages/*" ],
       "@api/*": [ "pages/api/*" ],
+      "@pages/*": [ "pages/*" ],
+      "@layouts/*": [ "layouts/*" ],
       "@components/*": [ "components/*" ],
       "@/*": [ "./*" ]
     }
