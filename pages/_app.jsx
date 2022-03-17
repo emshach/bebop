@@ -1,5 +1,5 @@
-import { SessionProvider } from "next-auth/react"
-import '../styles/globals.css'
+import { useSession, SessionProvider } from "next-auth/react"
+import '../styles/globals.scss'
 
 function Auth({ children }) {
   const { data: session, status } = useSession({  required: true })
