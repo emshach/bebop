@@ -24,9 +24,9 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation( fields: [userId], references: [id], onDelete: Cascade )
 
-  @@unique([provider, providerAccountId])
+  @@unique([ provider, providerAccountId ])
 }
 
 model Session {
@@ -34,7 +34,7 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User     @relation( fields: [userId], references: [id], onDelete: Cascade )
 }
 
 model User {
@@ -57,26 +57,18 @@ model VerificationToken {
   token      String   @unique
   expires    DateTime
 
-  @@unique([identifier, token])
+  @@unique([ identifier, token ])
 }
 
 model Profile {
   id   String @id
-  user User   @relation(fields: [id], references: [id], onDelete: Cascade)
+  user User   @relation( fields: [id], references: [id], onDelete: Cascade )
 }
 
 model DoctorProfile {
   id           String        @id
-  user         User          @relation(fields: [id], references: [id], onDelete: Cascade)
-  appointments Appointment[]
-}
-
-model Appointment {
-  id       Int           @id @default(autoincrement())
-  userId   String
-  doctorId String
-  user     User          @relation(fields: [userId], references: [id], onDelete: Cascade)
-  doctor   DoctorProfile @relation(fields: [doctorId], references: [id], onDelete: Cascade)
+  user         User          @relation( fields: [id], references: [id], onDelete: Cascade )
+  hours        DoctorHour[]
 }
 
 model Permission {
@@ -88,9 +80,37 @@ model Permission {
 
 model UserPermission {
   userId       String
-  user         User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user         User       @relation( fields: [userId], references: [id], onDelete: Cascade )
   permissionId Int
-  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+  permission   Permission @relation( fields: [permissionId], references: [id], onDelete: Cascade )
 
-  @@unique([userId, permissionId])
+  @@unique([ userId, permissionId ])
+}
+
+model Hour {
+  id       Int          @id @default(autoincrement())
+  day      Int
+  start    Int
+  active   Boolean      @default(true)
+  doctors  DoctorHour[]
+}
+
+model DoctorHour {
+  id           Int           @id @default(autoincrement())
+  active       Boolean       @default(true)
+  doctorId     String
+  hourId       Int
+  doctor       DoctorProfile @relation( fields: [doctorId], references: [id], onDelete: Cascade )
+  Hour         Hour          @relation( fields: [hourId], references: [id], onDelete: Cascade)
+  appointments Appointment[]
+  @@unique([ doctorId, hourId ])
+}
+
+model Appointment {
+  id        Int        @id @default(autoincrement())
+  patientId String
+  hourId    Int
+  date      DateTime   @db.Date
+  patient   User       @relation( fields: [patientId], references: [id], onDelete: Cascade )
+  hour      DoctorHour @relation( fields: [hourId], references: [id], onDelete: Cascade)
 }

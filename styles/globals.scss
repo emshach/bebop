@@ -4,9 +4,12 @@ body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-  background: darkorchid;
+  background: blueviolet;
   background: linear-gradient( blueviolet, darkorchid );
   color: white;
+}
+body {
+  min-height: 100vh;
 }
 
 a {
@@ -19,7 +22,15 @@ a {
 }
 .appbar {
   > .toolbar{
-    background: darkorchid;
+    background: blueviolet;
     color: white;
   }
+}
+.page {
+  padding-top: 4rem;
+}
+.fab {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
 }
