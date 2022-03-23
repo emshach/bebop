@@ -17,6 +17,7 @@ export default NextAuth({
   // },
   adapter: PrismaAdapter( prisma ),
   session: { jwt: true },
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, user }) {
       token.roles = []
