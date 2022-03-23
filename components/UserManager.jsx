@@ -76,19 +76,16 @@ export default function UserManager() {
   }
 
   const updateUser = async ( e, data ) => {
-    console.log( 'updateUser', data )
     const result = await api.updateUser( data )
     setEditing( null )
   }
 
   const updatePatient = async ( e, data ) => {
-    console.log( 'updatePatient', data )
     const result = await api.updatePatient( data )
     setEditing( null )
   }
 
   const updateDoctor = async ( e, data ) => {
-    console.log( 'updateDoctor', data )
     const creating = !editing || !editing.id
     const result = await api.updateDoctor( data )
     if ( creating ) {
@@ -99,7 +96,6 @@ export default function UserManager() {
   }
 
   const updateAdmin = async ( e, data ) => {
-    console.log( 'updateAdmin', data )
     const result = await api.updateAdmin( data )
     setEditing( null )
   }

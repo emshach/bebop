@@ -7,7 +7,6 @@ export default function AllUserstList({ onLoad, onEdit, ...props }) {
   const [ rows, setRows ] = useState([])
   // const [ loaded, setLoaded ] = useState( !refresh )
   const [ request ] = useFetch( '/api/users', { cachePolicy: 'no-cache' })
-  useEffect(() => initData(), [])
 
   async function initData() {
     const data = await request.get()
@@ -18,6 +17,17 @@ export default function AllUserstList({ onLoad, onEdit, ...props }) {
       setRows( data.rows || [] )
     }
   }
+  
+  useEffect(() => {
+    request.get().then( data => {
+      if ( data ) {
+        if ( data.columns ) {
+          setColumns( data.columns )
+        }
+        setRows( data.rows || [] )
+      }
+    })
+  }, [ request ])
   
   return (
     request.loading ?

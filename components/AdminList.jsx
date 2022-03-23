@@ -7,7 +7,6 @@ export default function AdminList({ onLoad, onEdit, ...props }) {
   const [ rows, setRows ] = useState([])
   // const [ loaded, setLoaded ] = useState( !refresh )
   const [ request ] = useFetch( '/api/user/admin-staff', { cachePolicy: 'no-cache' })
-  useEffect(() => initData(), [])
 
   async function initData() {
     const data = await request.get()
@@ -19,6 +18,17 @@ export default function AdminList({ onLoad, onEdit, ...props }) {
     }
   }
   
+  useEffect(() => {
+    request.get().then( data => {
+      if ( data ) {
+        if ( data.columns ) {
+          setColumns( data.columns )
+        }
+        setRows( data.rows || [] )
+      }
+    })
+  }, [ request ])
+
   return (
     request.loading ?
        'Loading...' // TODO: loading spinner

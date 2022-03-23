@@ -8,7 +8,6 @@ export default async function handler( req, res ) {
     let hours
     try {
       hours = await getOfficeHours({})
-      console.log({ hours })
       res.status( 200 ).json({ ok: true, hours })
     } catch( error ) {
       console.error( error )
@@ -19,7 +18,6 @@ export default async function handler( req, res ) {
       })
     }
   } else if ( req.method === 'POST' ) {
-    console.log( 'post office-hours', req.body )
     try {
       const currentHours = req.body
       const hours = await updateOfficeHours({
@@ -32,7 +30,7 @@ export default async function handler( req, res ) {
         res.status( 500 ).json({ ok: false, error: "Database update failed" })
       }
     } catch( error ) {
-      console.log( error )
+      console.error( error )
       res.status( 500 ).json({
         ok: false,
         error: "Database update failed",

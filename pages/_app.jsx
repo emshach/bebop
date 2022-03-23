@@ -38,7 +38,6 @@ function Bebop({
   emotionCache = clientSideEmotionCache, 
   pageProps: { session, ...pageProps },
 }) {
-  console.log( 'app', { session })
   return (
     // <StyledEngineProvider injectFirst>
     <CacheProvider value={ emotionCache }>

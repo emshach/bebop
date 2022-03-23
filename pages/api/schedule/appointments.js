@@ -20,7 +20,6 @@ export default async function handler( req, res ) {
     }
   } else if ( req.method === 'POST' ) {
     try {
-      console.log( 'scheduling', { session })
       const result = await (
         req.body.id ?
            updateAppointment({
@@ -37,7 +36,7 @@ export default async function handler( req, res ) {
         res.status( 500 ).json({ ok: false, error: "Database update failed" })
       }
     } catch( error ) {
-      console.log( error )
+      console.error( error )
       res.status( 500 ).json({
         ok: false,
         error: "Database update failed",

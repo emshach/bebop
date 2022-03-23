@@ -8,7 +8,7 @@ export default function MySchedule() {
                                 { cachePolicy: 'no-cache' })
   useEffect(() => {
     request.get()
-  }, [])
+  }, [ request ])
 
   if ( request.loading ) {
     return 'Loading...'

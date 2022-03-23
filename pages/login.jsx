@@ -15,7 +15,6 @@ export default function SignIn({ providers }) {
   return (
     <Layout>{
       Object.values( providers ).map( provider => {
-        console.log( 'provider', provider )
         return (
           <div key={ provider.name }>
             <button onClick={() => signIn( provider.id )}>

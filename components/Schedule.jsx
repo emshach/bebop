@@ -322,7 +322,6 @@ export default class Schedule extends React.PureComponent {
           const data =  res.result
           const endDate = new Date( data.date )
           endDate.setHours( endDate.getHours() + 1 )
-          console.log( 'added appointment', data )
           this.getSlots( this.state.currentDate )
           this.setState({
             appointments: [
@@ -373,7 +372,6 @@ export default class Schedule extends React.PureComponent {
                                 doctors.filter(({ doctor: { id }}) =>
                                   filter.indexOf( id ) > -1 )
                                 : doctors )[0]
-               console.log( 'booking', { date, hour })
                this.setState({ confirm: { date, hour }})
                this.setState({ confirmOpen: true })
              }}>

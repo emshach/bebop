@@ -59,7 +59,7 @@ function MyAccount() {
 
   useEffect(() => {
     request.get()
-  }, [])
+  }, [ request ])
 
   if ( request.loading) {
     return 'Loading...'

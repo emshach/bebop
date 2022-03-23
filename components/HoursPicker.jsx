@@ -265,7 +265,6 @@ export default class HoursPicker extends React.PureComponent {
     const date = props.startDate
     const d = date.getDay()
     const closed = !Object.keys( this.state.availableHours[d] ).length
-    console.log({ hours: this.state.availableHours, closed })
     return <StyledWeekViewDayScaleCell
              { ...props }
              className={`${ classes.override } ${ closed ? classes.closed : '' }`} />

@@ -17,20 +17,21 @@ export default function UserList({
   onRefresh,
   onEdit,
   ...props }) {
-  if (!actions) {
-    actions = ( row ) => (
-      <IconButton onClick={ e => { onEdit( row )}}>
-        <EditIcon/>
-      </IconButton>
-    )
-  }
+
+  const RowAction = ({ row }) => (
+    <IconButton onClick={ e => { onEdit( row )}}>
+      <EditIcon/>
+    </IconButton>
+  )
+  const Actions = actions || RowAction
+
   return (
     <TableContainer component={ Paper }>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow key="header">{
             columns.map( col => (
-              <TableCell>{ col.label }</TableCell>
+              <TableCell key={ col.name }>{ col.label }</TableCell>
             ))}
             <TableCell align="right">
               <IconButton onClick={ onRefresh }>
@@ -43,11 +44,11 @@ export default function UserList({
           rows && rows.length ?
              rows.map( row =>
                (<TableRow
-                  key={ row.name }
+                  key={ row.id }
                   sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                 >{
                 columns.map( col => (
-                  <TableCell>{
+                  <TableCell key={ `${ col.name }:${ row.id }` }>{
                     col.render ? (
                       ('join' in col.render) ?
                          ( row[ col.name ] || col.default || []).join(
@@ -63,9 +64,9 @@ export default function UserList({
                        : row[ col.name ] || col.default || ''
                     ) : row[ col.name ] || col.default || '' }</TableCell>
                 ))}
-                  <TableCell align="right">{
-                    actions ? actions( row ) : null
-                  }</TableCell>
+                  <TableCell align="right">
+                    <Actions row={ row }/>
+                  </TableCell>
                 </TableRow>))
              : <TableRow key="empty">
                  <TableCell colSpan={ actions ? ( columns.length + 1 )

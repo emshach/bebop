@@ -12,6 +12,7 @@ import ConfirmationDialog from '@components/ConfirmationDialog'
 import api from '@lib/api'
 
 export default function MyAccountSettings({ user, onUpdateUser, ...props }) {
+  let noProfile = false
   if ( !user ) {
     user = {}
   }
@@ -19,8 +20,10 @@ export default function MyAccountSettings({ user, onUpdateUser, ...props }) {
     onUpdateUser = () => {}
   }
 
-  if ( !user.profile )
-    return "Loading..."
+  if ( !user.profile ) {
+    user.profile = {}
+    noProfile = true
+  }
 
   const [ address, setAddress ] = useState((( user.profile.addresses || [] ).find(
     a => a.primary
@@ -29,6 +32,10 @@ export default function MyAccountSettings({ user, onUpdateUser, ...props }) {
   const [ contacts, setContacts ] = useState( user.profile.contacts || [])
   const [ confirmOpen, setConfirmOpen ] = useState( false )
   const [ confirm, setConfirm ] = useState( null )
+
+  if ( noProfile ) {
+    return "Loading..."
+  }
 
   const onAddAddress = async ( address ) => {
     address.primary = address.primary || !addresses.length
@@ -98,7 +105,7 @@ export default function MyAccountSettings({ user, onUpdateUser, ...props }) {
           <h3>Contacts</h3>
           <List>{
             contacts.map( contact => (
-              <ListItem>{
+              <ListItem key={ contact.data }>{
                 contact.type
               }: {
                 contact.data

@@ -83,11 +83,7 @@ function Admin() {
         <UserManager />
         :<Grid container spacing={2}>
             <Grid item xs={4}>
-              <Link href="/admin/office-hours">
-                <Item>{
-                  'Office Hours'
-                }</Item>
-              </Link>
+              <Item>Office Hours</Item>
             </Grid>
           </Grid>
       }

@@ -26,7 +26,6 @@ export default NextAuth({
       if ( user?.superuser ) {
         token.roles.push( 'superuser' )
       }
-      console.log( 'jwt', { token, user })
       return token;
     },
     async session({ session, token, user }) {
@@ -46,7 +45,6 @@ export default NextAuth({
       if ( user && session && !session.user.id ) {
         session.user.id = user.id
       }
-      console.log( 'session', { session, token, user })
       return session;
     },
   },

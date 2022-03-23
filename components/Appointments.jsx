@@ -15,9 +15,10 @@ function Appointments() {
   const pastApts = []
   const futureApts = []
   const [ request ] = useFetch( 'api/schedule/appointments' )
+
   useEffect(() => {
     request.get()
-  }, [])
+  }, [ request ])
 
   if ( request.loading) {
     return 'Loading...'
@@ -34,7 +35,6 @@ function Appointments() {
       apt.dateStr = apt.date.toLocaleString();
       ( apt.date > now ? futureApts : pastApts ).push( apt )
     }
-    console.log({ pastApts, futureApts })
   }
   return (
     <Box sx={{ p: 2 }}>
