@@ -30,14 +30,15 @@ export default function ResponsiveDrawer( props ) {
     window,
     menu,
     appBarContent,
+    pageClass,
     mainClass,
     mainContent,
     navigate,
+    current,
     sx,
     ...restProps
   } = props
   const [ mobileOpen, setMobileOpen ] = React.useState( false )
-  const [ current, setCurrent ] = React.useState( null )
 
   const handleDrawerToggle = () => {
     setMobileOpen( !mobileOpen )
@@ -57,7 +58,6 @@ export default function ResponsiveDrawer( props ) {
                        key={ item.link }
                        selected={ item.link === current }
                        onClick={ e => {
-                         setCurrent( item.link )
                          navigate( item.link )
                        }}>
                { item.icon ?
@@ -76,7 +76,7 @@ export default function ResponsiveDrawer( props ) {
   sx.display = 'flex'
 
   return (
-    <Box { ...restProps } sx={ sx }>
+    <Box { ...restProps } className={ `page ${ pageClass || '' }`} sx={ sx }>
       <CssBaseline />
       <AppBar
         position="fixed"

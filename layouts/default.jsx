@@ -40,7 +40,7 @@ export default function DefaultLayout({ title, help, children }) {
           <Box sx={{ flex: 1 }}/>
           { session === false ? null
             : <Link href={
-              session && session.user ? '/my-account'
+              session && session.user ? '/my-account/main'
                  : '/api/auth/signin'
             } passHref>
                 { session && session.user ?

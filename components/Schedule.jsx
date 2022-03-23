@@ -6,11 +6,7 @@ import Paper from '@mui/material/Paper'
 import { ViewState } from '@devexpress/dx-react-scheduler'
 import { format } from 'date-fns'
 import Button from '@material-ui/core/Button'
-import Dialog from '@mui/material/Dialog'
-import DialogActions from '@mui/material/DialogActions'
-import DialogContent from '@mui/material/DialogContent'
-import DialogContentText from '@mui/material/DialogContentText'
-import DialogTitle from '@mui/material/DialogTitle'
+import ConfirmationDialog from '@components/ConfirmationDialog'
 import {
   Scheduler,
   WeekView,
@@ -232,6 +228,7 @@ export default class Schedule extends React.PureComponent {
       query: query || 'schedule/open-slots',
       doctors: [],
       doctorIds: [],
+      confirmOpen: false,
       confirm: false
     }
 
@@ -340,7 +337,7 @@ export default class Schedule extends React.PureComponent {
           })
         } // TODO: else
       }
-      this.setState({ confirm: false })
+      this.setState({ confirmOpen: false })
     }
   }
 
@@ -378,6 +375,7 @@ export default class Schedule extends React.PureComponent {
                                 : doctors )[0]
                console.log( 'booking', { date, hour })
                this.setState({ confirm: { date, hour }})
+               this.setState({ confirmOpen: true })
              }}>
              <div className={ classes.label }>Select</div>
            </StyledWeekViewTimeTableCell>
@@ -422,7 +420,8 @@ export default class Schedule extends React.PureComponent {
       currentDate,
       doctors,
       doctorIds,
-      confirm
+      confirm,
+      confirmOpen,
     } = this.state
     const { TimeTableCell, handleCloseConfirm } = this
     return (
@@ -460,22 +459,28 @@ export default class Schedule extends React.PureComponent {
           />
         </Scheduler>
       </Paper>
-        <Dialog open={ confirm } onClose={ handleCloseConfirm }>
-        <DialogTitle>Make Appointment?</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Make Appointment with {
+        <ConfirmationDialog
+          open={ confirmOpen }
+          onClose={ handleCloseConfirm }
+          title="Make Appointment?"
+          content={
+            `Make Appointment with ${
               confirm && confirm.hour.doctor.title
-            } at {
+            } at ${
               confirm && confirm.date.toLocaleString()
-            }?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={ handleCloseConfirm }>Cancel</Button>
-          <Button onClick={ () => handleCloseConfirm( true )}>Confirm</Button>
-        </DialogActions>
-      </Dialog>
+            }?`
+          }
+          actions={[
+            {
+              label: 'Cancel',
+              handler: () => handleCloseConfirm(),
+            },
+            {
+              label: 'Confirm',
+              handler: () => handleCloseConfirm( true ),
+            },
+          ]}
+        />
       </div>
     )
   }

@@ -1,6 +1,6 @@
-import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { useSession } from "next-auth/react"
+import { useRouter } from 'next/router'
 import Link from 'next/link'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
@@ -26,25 +26,6 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-const Main = styled( 'div', { shouldForwardProp: (prop) => prop !== 'open' })(
-  ({ theme, open }) => ({
-    flexGrow: 1,
-    padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    marginLeft: `-${ drawerWidth }px`,
-    ...(open && {
-      transition: theme.transitions.create('margin', {
-        easing: theme.transitions.easing.easeOut,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-      marginLeft: 0,
-    }),
-  }),
-);
-
 const sectionHelp = {
   main: 'Browse the dashboard or select a section from the menu',
   hours: 'Click/tap hour slots to set office hours'
@@ -56,10 +37,11 @@ function Admin() {
 
   const router = useRouter()
   const { section } = router.query
-  // const [ section, setSection ] = useState( 'main' )
+
   const onNavigate = ( link ) => {
-    router.push( `/admin/${ link }` )
+    router.push( link.startsWith ('/') ? link : `/admin/${ link }` )
   }
+
   return (
     <Layout
       title="Administration"
@@ -86,6 +68,7 @@ function Admin() {
           icon: <SettingsIcon/>
         },
       ]}
+      current={ section }
       onNavigate={ onNavigate }
     >
       { section === 'schedule' ?

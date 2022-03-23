@@ -18,14 +18,14 @@ export default function Home() {
           log in to keep track of your appointmetns.
         </Box>
         <Box>
-          <Link href="/appointments" passHref>
+          <Link href="/my-account/appointments" passHref>
             <Button variant="contained" size="large">
               View my appointments
             </Button>
           </Link>
         </Box>
         <Box sx={{ mt: 2 }}>
-          <Link href="/appointments/new/" passHref>
+          <Link href="/my-account/schedule" passHref>
             <Button variant="contained" size="large">
               Make an appointment
             </Button>
