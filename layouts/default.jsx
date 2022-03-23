@@ -39,10 +39,7 @@ export default function DefaultLayout({ title, help, children }) {
           </Typography>
           <Box sx={{ flex: 1 }}/>
           { session === false ? null
-            : <Link href={
-              session && session.user ? '/my-account/main'
-                 : '/api/auth/signin'
-            } passHref>
+            : <Link href="/my-account/main" passHref>
                 { session && session.user ?
                   <IconButton sx={{ color: 'white' }}>
                     <UserIcon/>
