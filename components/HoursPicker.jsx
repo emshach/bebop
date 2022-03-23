@@ -3,7 +3,7 @@ import { useFetch } from 'react-async'
 import Paper from '@mui/material/Paper'
 import { ViewState } from '@devexpress/dx-react-scheduler'
 import { format } from 'date-fns'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import {
   Scheduler,
   WeekView,

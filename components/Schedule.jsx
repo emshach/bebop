@@ -5,7 +5,7 @@ import CardContent from '@mui/material/CardContent'
 import Paper from '@mui/material/Paper'
 import { ViewState } from '@devexpress/dx-react-scheduler'
 import { format } from 'date-fns'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import ConfirmationDialog from '@components/ConfirmationDialog'
 import {
   Scheduler,

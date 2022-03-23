@@ -3,7 +3,7 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 
 export default function ConfirmationDialog({
   title,
@@ -24,7 +24,9 @@ export default function ConfirmationDialog({
       </DialogContent>
       <DialogActions>{
         ( actions || [] ).map( action => (
-          <Button onClick={ action.handler }>{ action.label }</Button>
+          <Button key={ action.label}
+                  onClick={ action.handler }
+                  { ...( action.props || {} )}>{ action.label }</Button>
         ))
       }</DialogActions>
     </Dialog>

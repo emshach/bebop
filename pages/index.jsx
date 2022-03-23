@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import Box from '@mui/material/Box'
 import Layout from '@layouts/default'
 import styles from '../styles/Home.module.css'

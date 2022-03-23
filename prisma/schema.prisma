@@ -42,7 +42,6 @@ model User {
   name           String?
   email          String?          @unique
   emailVerified  DateTime?
-  secret         String?          @db.Text
   image          String?
   accounts       Account[]
   sessions       Session[]
@@ -63,8 +62,33 @@ model VerificationToken {
 }
 
 model Profile {
-  id   String @id
-  user User   @relation( fields: [id], references: [id], onDelete: Cascade )
+  id        String    @id
+  user      User      @relation( fields: [id], references: [id], onDelete: Cascade )
+  secret    String?   @db.Text
+  addresses Address[]
+  contacts  Contact[]
+}
+
+model Contact {
+  id     Int     @id @default(autoincrement())
+  userId String
+  user   Profile @relation( fields: [userId], references: [id], onDelete: Cascade)
+  type   String
+  data   String
+}
+
+model Address {
+  id              Int     @id @default(autoincrement())
+  userId          String
+  user            Profile @relation( fields: [userId], references: [id], onDelete: Cascade)
+  primary         Boolean
+  houseNameNumber String?
+  addressLine1    String
+  addressLine2    String?
+  city            String
+  region          String
+  zip             String
+  country         String
 }
 
 model DoctorProfile {

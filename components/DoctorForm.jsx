@@ -6,7 +6,7 @@ import FormGroup from '@mui/material/FormGroup'
 import FormLabel from '@mui/material/FormLabel'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Checkbox from '@mui/material/Checkbox'
-import Button from '@material-ui/core/Button'
+import Button from '@mui/material/Button'
 import HoursPicker from '@components/HoursPicker'
 import Divider from '@mui/material/Divider'
 

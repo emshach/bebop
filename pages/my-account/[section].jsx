@@ -95,7 +95,7 @@ function MyAccount() {
 
   const onConfirmLogout = ( response ) => {
     if ( response ) {
-      signOut({  callbackUrl: '/' })
+      signOut({ callbackUrl: '/' })
     } else {
       onCloseConfirm()
     }
@@ -118,37 +118,48 @@ function MyAccount() {
     return result
   }
 
+  const menu = [
+    {
+      title: 'Manage Account',
+      link: 'settings',
+      icon: <SettingsIcon/>
+    },
+    {
+      title: 'Appointments',
+      link: 'appointments',
+      icon: <ListIcon/>
+    },
+    {
+      title: 'Make Appointment',
+      link: 'schedule',
+      icon: <CalendarIcon/>
+    },
+  ]
+
+  if ( userData.admin || userData.superuser ) {
+    menu.push({
+      title: 'Manage Site',
+      link: '/admin',
+      icon: <PersonIcon/>
+    })
+  }
+
+  menu.push({
+    title: 'Sign Out',
+    link: 'logout',
+    icon: <LogoutIcon/>
+  })
+
   return (
     <Layout
       title="My Account"
       help={ sectionHelp[ section ]}
-      menu={[
-        {
-          title: 'Manage Account',
-          link: 'settings',
-          icon: <SettingsIcon/>
-        },
-        {
-          title: 'Appointments',
-          link: 'appointments',
-          icon: <ListIcon/>
-        },
-        {
-          title: 'Make Appointment',
-          link: 'schedule',
-          icon: <CalendarIcon/>
-        },
-        {
-          title: 'Sign Out',
-          link: 'logout',
-          icon: <LogoutIcon/>
-        },
-      ]}
+      menu={ menu }
       current={ section }
       onNavigate={ onNavigate }
     >
       { section === 'settings' ?
-        <MyAccountSettings user={ user } />
+        <MyAccountSettings user={ userData } />
         : section === 'appointments' ?
         <Appointments />
         : section === 'schedule' ?

@@ -38,5 +38,11 @@ export default async function handler( req, res ) {
         error: "Database update failed",
         details: `${ error }`})
     }
+  } else {
+    res.setHeader( 'Allow', ['GET', 'POST' ]);
+    res.status( 405 ).json({
+      ok: false,
+      error: `Method ${ req.method } Not Allowed`
+    });
   }
 }
