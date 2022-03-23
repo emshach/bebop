@@ -42,6 +42,7 @@ model User {
   name           String?
   email          String?          @unique
   emailVerified  DateTime?
+  secret         String?          @db.Text
   image          String?
   accounts       Account[]
   sessions       Session[]
@@ -49,7 +50,8 @@ model User {
   doctorProfile  DoctorProfile?
   appointments   Appointment[]
   permissions    UserPermission[]
-  superuser      Boolean
+  admin          Boolean          @default( false )
+  superuser      Boolean          @default( false )
 }
 
 model VerificationToken {
@@ -68,6 +70,7 @@ model Profile {
 model DoctorProfile {
   id           String        @id
   user         User          @relation( fields: [id], references: [id], onDelete: Cascade )
+  title        String
   hours        DoctorHour[]
 }
 
@@ -93,6 +96,8 @@ model Hour {
   start    Int
   active   Boolean      @default(true)
   doctors  DoctorHour[]
+
+  @@unique([ day, start ])
 }
 
 model DoctorHour {
@@ -101,7 +106,7 @@ model DoctorHour {
   doctorId     String
   hourId       Int
   doctor       DoctorProfile @relation( fields: [doctorId], references: [id], onDelete: Cascade )
-  Hour         Hour          @relation( fields: [hourId], references: [id], onDelete: Cascade)
+  hour         Hour          @relation( fields: [hourId], references: [id], onDelete: Cascade)
   appointments Appointment[]
   @@unique([ doctorId, hourId ])
 }
@@ -110,7 +115,15 @@ model Appointment {
   id        Int        @id @default(autoincrement())
   patientId String
   hourId    Int
-  date      DateTime   @db.Date
+  date      DateTime
   patient   User       @relation( fields: [patientId], references: [id], onDelete: Cascade )
   hour      DoctorHour @relation( fields: [hourId], references: [id], onDelete: Cascade)
+}
+
+model Setting {
+  key   String  @id
+  type  String  @default( "string" )
+  label String
+  help  String? @db.Text
+  value String  @db.Text
 }

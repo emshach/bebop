@@ -9,9 +9,13 @@ export default async function handler( req, res ) {
   const end = req.query.end
   let slots
   try {
-    slots = getOpenSlots({ start, end })
+    slots = await getOpenSlots({ start, end })
+    res.status( 200 ).json({ ok: true, result: slots })
   } catch( error ) {
-    
+    res.status( 500 ).json({
+      ok: false,
+      error: "Error getting data",
+      details: `${ error }`
+    })
   }
-  res.status( 200 ).json({ name: 'John Doe' })
 }

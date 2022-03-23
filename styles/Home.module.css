@@ -48,13 +48,15 @@
 
 .title,
 .description {
+  color: white;
   text-align: center;
 }
 
 .description {
   margin: 4rem 0;
+  max-width: 30rem;
   line-height: 1.5;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .code {
