@@ -94,11 +94,11 @@ function Admin() {
         :<Grid container spacing={2}>
            <Grid item xs={12}>
              <h4 className={ styles.title }>Doctors</h4>
-              <Item><DoctorList/></Item>
+             <DoctorList/>
             </Grid>
            <Grid item xs={12}>
              <h4 className={ styles.title }>Patients</h4>
-              <Item><PatientList/></Item>
+             <PatientList/>
             </Grid>
           </Grid>
       }
