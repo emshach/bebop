@@ -11,6 +11,8 @@ import ConfirmationDialog from '@components/ConfirmationDialog'
 // import { red } from '@mui/material/colors'
 import api from '@lib/api'
 
+import styles from '@styles/User.module.scss'
+
 export default function MyAccountSettings({ user, onUpdateUser, ...props }) {
   let noProfile = false
   if ( !user ) {
@@ -87,7 +89,7 @@ export default function MyAccountSettings({ user, onUpdateUser, ...props }) {
         <h2> Personal Info</h2>
         { /* TODO: list addrese */ }
         <Box>
-          <h3>Addresses</h3>
+          <h4 className={ styles.title }>Address</h4>
           <Paper sx={{ p: 2 }}>
             <AddressInput
               onAdd={ onAddAddress }
@@ -97,18 +99,18 @@ export default function MyAccountSettings({ user, onUpdateUser, ...props }) {
             />
           </Paper>
         </Box>
-        <Box>
-          <h3>Contacts</h3>
-          <List>{
-            contacts.map( contact => (
-              <ListItem key={ contact.data }>{
-                contact.type
-              }: {
-                contact.data
-              }</ListItem>
-            ))
-          }</List>
-        </Box>
+        {/* <Box> */}
+        {/*   <h3>Contacts</h3> */}
+        {/*   <List>{ */}
+        {/*     contacts.map( contact => ( */}
+        {/*       <ListItem key={ contact.data }>{ */}
+        {/*         contact.type */}
+        {/*       }: { */}
+        {/*         contact.data */}
+        {/*       }</ListItem> */}
+        {/*     )) */}
+        {/*   }</List> */}
+        {/* </Box> */}
       </Box>
       <Box>
         <h2>Delete Account</h2>

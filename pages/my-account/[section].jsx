@@ -121,6 +121,10 @@ function MyAccount() {
 
   const menu = [
     {
+      title: 'My Account',
+      link: 'main',
+    },
+    {
       title: 'Manage Account',
       link: 'settings',
       icon: <SettingsIcon/>

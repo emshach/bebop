@@ -22,12 +22,16 @@ export default function UserList({
 
   const RowAction = ({ row }) => (
     <Fragment>
-      <IconButton onClick={ e => { onEdit( row )}}>
-        <EditIcon/>
-      </IconButton>
-      <IconButton onClick={ e => { onDelete( row )}}>
-        <DeleteIcon/>
-      </IconButton>
+      { onEdit
+        ? <IconButton onClick={ e => { onEdit( row )}}>
+            <EditIcon/>
+          </IconButton>
+        : null }
+      { onDelete
+        ? <IconButton onClick={ e => { onDelete( row )}}>
+            <DeleteIcon/>
+          </IconButton>
+        : null }
     </Fragment>
   )
   const Actions = actions || RowAction

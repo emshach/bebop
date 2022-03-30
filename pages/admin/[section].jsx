@@ -16,6 +16,11 @@ import HoursPicker from '@components/HoursPicker'
 import UserManager from '@components/UserManager'
 import Settings from '@components/Settings'
 
+import DoctorList from '@components/DoctorList'
+import PatientList from '@components/PatientList'
+
+import styles from '@styles/layouts/Admin.module.scss'
+
 const drawerWidth = 360
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -47,6 +52,11 @@ function Admin() {
       title="Administration"
       help={ sectionHelp[ section ]}
       menu={[
+        {
+          title: 'Site Administration',
+          link: 'main',
+          /* icon: <ScheduleIcon/> */
+        },
         {
           title: 'Schedule',
           link: 'schedule',
@@ -82,8 +92,13 @@ function Admin() {
         : section === 'users' ?
         <UserManager />
         :<Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Item>Office Hours</Item>
+           <Grid item xs={12}>
+             <h4 className={ styles.title }>Doctors</h4>
+              <Item><DoctorList/></Item>
+            </Grid>
+           <Grid item xs={12}>
+             <h4 className={ styles.title }>Patients</h4>
+              <Item><PatientList/></Item>
             </Grid>
           </Grid>
       }
