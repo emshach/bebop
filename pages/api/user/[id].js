@@ -1,5 +1,5 @@
 import { getSession } from "next-auth/react"
-import { getUser, deleteUser } from '@lib/queries'
+import { getUser, updateUser, deleteUser } from '@lib/queries'
 
 // GET /api/has-superuser
 export default async function handle( req, res ) {

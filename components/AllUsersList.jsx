@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import useFetch from 'use-http'
 import UserList from '@components/UserList'
 
-export default function AllUserstList({ onLoad, onEdit, ...props }) {
+export default function AllUserstList({ onLoad, ...props }) {
   const [ columns, setColumns ] = useState([])
   const [ rows, setRows ] = useState([])
   // const [ loaded, setLoaded ] = useState( !refresh )
@@ -35,6 +35,6 @@ export default function AllUserstList({ onLoad, onEdit, ...props }) {
        : <UserList columns={ columns }
                    rows={ rows }
                    onRefresh={ initData }
-                   onEdit={ onEdit } />
+                   { ...props }/>
   )
 }

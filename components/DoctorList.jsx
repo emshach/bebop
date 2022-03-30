@@ -2,7 +2,7 @@ import UserList from '@components/UserList'
 import { useState, useEffect } from 'react'
 import useFetch from 'use-http'
 
-export default function DoctorList({ onLoad, onEdit, ...props }) {
+export default function DoctorList({ onLoad, ...props }) {
   const [ columns, setColumns ] = useState([])
   const [ rows, setRows ] = useState([])
   // const [ loaded, setLoaded ] = useState( !refresh )
@@ -35,6 +35,6 @@ export default function DoctorList({ onLoad, onEdit, ...props }) {
        : <UserList columns={ columns }
                    rows={ rows }
                    onRefresh={ initData }
-                   onEdit={ onEdit } />
+                   { ...props } />
   )
 }

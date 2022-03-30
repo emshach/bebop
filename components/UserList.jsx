@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { Fragment } from 'react'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
@@ -9,6 +9,7 @@ import Paper from '@mui/material/Paper'
 import IconButton from '@mui/material/IconButton'
 import RefreshIcon from '@mui/icons-material/Refresh'
 import EditIcon from '@mui/icons-material/Edit'
+import DeleteIcon from '@mui/icons-material/Delete'
 
 export default function UserList({
   actions,
@@ -16,12 +17,18 @@ export default function UserList({
   rows,
   onRefresh,
   onEdit,
+  onDelete,
   ...props }) {
 
   const RowAction = ({ row }) => (
-    <IconButton onClick={ e => { onEdit( row )}}>
-      <EditIcon/>
-    </IconButton>
+    <Fragment>
+      <IconButton onClick={ e => { onEdit( row )}}>
+        <EditIcon/>
+      </IconButton>
+      <IconButton onClick={ e => { onDelete( row )}}>
+        <DeleteIcon/>
+      </IconButton>
+    </Fragment>
   )
   const Actions = actions || RowAction
 

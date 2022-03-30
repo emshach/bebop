@@ -17,6 +17,8 @@ export default function DoctorForm({ onCommit, onCancel, data, ...props }) {
   const [ name, setName ] = useState( data.name || '' )
   const [ email, setEmail ] = useState( data.email || '' )
   const [ sendEmail, setSendEmail ] = useState( true )
+  const [ doctorTitle, setDoctorTitle ] = useState(
+    ( data.doctorProfile && data.doctorProfile.title ) || '' )
 
   const updateName = (e) => {
     setName( e.target.value )
@@ -28,6 +30,10 @@ export default function DoctorForm({ onCommit, onCancel, data, ...props }) {
 
   const updateSendEmail = (e) => {
     setSendEmail( e.target.value )
+  }
+
+  const updateDoctorTitle = (e) => {
+    setDoctorTitle( e.target.value )
   }
 
   return (
@@ -49,6 +55,15 @@ export default function DoctorForm({ onCommit, onCancel, data, ...props }) {
                      variant="outlined"
                      value={ email }
                      onChange={ updateEmail }
+                     fullWidth />
+        </Box>
+        <Box sx={{ p: 1 }}>
+          <TextField id="user-doctor-title"
+                     name="doctor-title"
+                     label="Title"
+                     variant="outlined"
+                     value={ doctorTitle }
+                     onChange={ updateDoctorTitle }
                      fullWidth />
         </Box>
         <FormGroup sx={{ m: 1, ml: 3 }}>
@@ -76,6 +91,9 @@ export default function DoctorForm({ onCommit, onCancel, data, ...props }) {
           id: data.id,
           name,
           email,
+          doctor: true,
+          doctorTitle,
+          doctorProfile: data.doctorProfile,
           sendEmail
         })}}>Save</Button>
         <Button onClick={ onCancel }>Cancel</Button>

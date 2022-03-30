@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { useState } from 'react'
 import Tabs from '@mui/material/Tabs'
 import Tab from '@mui/material/Tab'
 import PropTypes from 'prop-types'
@@ -17,6 +17,7 @@ import DoctorForm from '@components/DoctorForm'
 import AdminForm from '@components/AdminForm'
 import Fab from '@mui/material/Fab'
 import AddIcon from '@mui/icons-material/Add'
+import ConfirmationDialog from '@components/ConfirmationDialog'
 import api from '@lib/api'
 
 function TabPanel(props) {
@@ -52,8 +53,11 @@ function a11yProps(index) {
 
 export default function UserManager() {
   const theme = useTheme()
-  const [ value, setValue ] = React.useState(0)
-  const [ editing, setEditing ] = React.useState( null )
+  const [ value, setValue ] = useState(0)
+  const [ editing, setEditing ] = useState( null )
+  const [ confirmOpen, setConfirmOpen ] = useState( false )
+  const [ confirm, setConfirm ] = useState( null )
+  const [ lastAction, setLastAction ] = useState( new Date().valueOf())
 
   const handleChange = ( event, newValue ) => {
     setValue( newValue )
@@ -73,6 +77,34 @@ export default function UserManager() {
 
   const handleChangeIndex = ( index ) => {
     setValue( index )
+  }
+
+  const onDelete = ( data ) => {
+    setConfirm({
+      title: `Really delete '${ data.name }'?`,
+      content: "All user data including appointments will be permanently erased. This cannot be undone. Are you sure?",
+      actions: [
+        {
+          label: "No",
+          handler: () => onCloseConfirm(),
+        },
+        {
+          label: 'Yes',
+          handler: () => onConfirmDelete( data.id ),
+        },
+      ]
+    })
+    setConfirmOpen( true )
+  }
+
+  const onCloseConfirm = () => {
+    setConfirmOpen( false )
+  }
+
+  const onConfirmDelete = async ( id ) => {
+    const res = await api._delete( `user/${ id }`)
+    onCloseConfirm()
+    setLastAction( new Date().valueOf() )
   }
 
   const updateUser = async ( e, data ) => {
@@ -135,28 +167,40 @@ export default function UserManager() {
              ? <UserForm onCommit={ updateUser }
                          onCancel={ cancelEdit }
                          data={ editing }/>
-             : <AllUsersList onLoad={ onLoad } onEdit={ onEdit }/>
+             : <AllUsersList key={ lastAction }
+                             onLoad={ onLoad }
+                             onEdit={ onEdit }
+                             onDelete={ onDelete }/>
         }</TabPanel>
         <TabPanel value={ value } index={1} dir={ theme.direction }>{
           editing
              ? <PatientForm onCommit={ updatePatient }
                             onCancel={ cancelEdit }
                             data={ editing }/>
-             : <PatientList onLoad={ onLoad } onEdit={ onEdit }/>
+          : <PatientList key={ lastAction }
+                         onLoad={ onLoad }
+                         onEdit={ onEdit }
+                         onDelete={ onDelete }/>
         }</TabPanel>
         <TabPanel value={ value } index={2} dir={ theme.direction }>{
           editing
              ? <DoctorForm onCommit={ updateDoctor }
                            onCancel={ cancelEdit }
                            data={ editing }/>
-             : <DoctorList onLoad={ onLoad } onEdit={ onEdit }/>
+             : <DoctorList key={ lastAction }
+                           onLoad={ onLoad }
+                           onEdit={ onEdit }
+                           onDelete={ onDelete }/>
         }</TabPanel>
         <TabPanel value={ value } index={3} dir={ theme.direction }>{
           editing
              ? <AdminForm onCommit={ updateAdmin }
                           onCancel={ cancelEdit }
                           data={ editing }/>
-             : <AdminList onLoad={ onLoad } onEdit={ onEdit }/>
+             : <AdminList key={ lastAction }
+                          onLoad={ onLoad }
+                          onEdit={ onEdit }
+                          onDelete={ onDelete }/>
         }</TabPanel>
       </SwipeableViews>
       { editing ? null
@@ -175,6 +219,15 @@ export default function UserManager() {
             }
           </Fab>
       }
+      <ConfirmationDialog
+        open={ confirmOpen }
+        onClose={ onCloseConfirm }
+        title={ confirm && confirm.title }
+        content={ confirm && confirm.content }
+        actions={ confirm && confirm.actions }
+      >{
+        confirm ? confirm.children : null
+      }</ConfirmationDialog>
     </Box>
   )
 }
