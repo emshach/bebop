@@ -23,7 +23,7 @@ export default async function handle( req, res ) {
       res.status( 200 ).json({ ok: true, result })
     }
   } else {
-    res.setHeader( 'Allow', ['GET', 'POST' ]);
+    res.setHeader( 'Allow', ['GET', 'POST', 'DELETE' ]);
     res.status( 405 ).json({
       ok: false,
       error: `Method ${ req.method } Not Allowed`

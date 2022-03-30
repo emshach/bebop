@@ -82,7 +82,7 @@ function Admin() {
       onNavigate={ onNavigate }
     >
       { section === 'schedule' ?
-        <Schedule />
+        <Schedule readOnly={ true } />
         : section === 'settings' ?
         <Settings />
         : section === 'hours' ?

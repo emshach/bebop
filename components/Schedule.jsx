@@ -193,6 +193,7 @@ export default class Schedule extends React.PureComponent {
       endDayHour,
       cellTitle,
       appointments,
+      readOnly,
     } = props
     // this.auth = true
     const today = new Date()
@@ -229,7 +230,8 @@ export default class Schedule extends React.PureComponent {
       doctors: [],
       doctorIds: [],
       confirmOpen: false,
-      confirm: false
+      confirm: false,
+      readOnly,
     }
 
     this.getSlots = ( currentDate ) => {
@@ -361,7 +363,8 @@ export default class Schedule extends React.PureComponent {
              { ...props }
              className={`${ classes.cell } ${
                             today ? classes.todayCell : '' } ${
-                            closed ? classes.closedCell : '' } ${
+                            this.state.readOnly || closed 
+                            ? classes.closedCell : '' } ${
                             closedDay ? classes.closedDayCell: '' }`}
              onClick={ e => {
                const hours = this.state.filteredHours

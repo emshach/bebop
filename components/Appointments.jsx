@@ -14,7 +14,7 @@ function Appointments() {
   const [ confirm, setConfirm ] = useState( false )
   const pastApts = []
   const futureApts = []
-  const [ request ] = useFetch( 'api/schedule/appointments' )
+  const [ request ] = useFetch( 'api/schedule/appointments', { cachePolicy: 'no-cache' })
 
   useEffect(() => {
     request.get()

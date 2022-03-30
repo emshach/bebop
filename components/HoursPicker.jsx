@@ -2,7 +2,7 @@ import React from 'react'
 import { useFetch } from 'react-async'
 import Paper from '@mui/material/Paper'
 import { ViewState } from '@devexpress/dx-react-scheduler'
-import { format } from 'date-fns'
+import { format, getDay } from 'date-fns'
 import Button from '@mui/material/Button'
 import {
   Scheduler,
@@ -275,9 +275,11 @@ export default class HoursPicker extends React.PureComponent {
       const hours = this.state.hours
       const { data } = e
       const start = new Date( data.startDate )
-      const d = start.getDate() - this.start.getDate()
+      /* const d = start.getDate() - this.start.getDate() */
+      const d = getDay( start )
       const h = start.getHours()
-      hours[d][h] = !hours[d][h]
+      console.log( 'appointment.onClick', { e, start, thisStart: this.start, d, h, hours })
+      hours[d][h] = !( hours[d] && hours[d][h])
       const appointments = toAppointments( this.start, hours, this.state.cellTitle )
       this.setState({ hours, appointments, dirty: true })
     }}/>
