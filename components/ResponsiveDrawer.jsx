@@ -58,6 +58,7 @@ export default function ResponsiveDrawer( props ) {
                        key={ item.link }
                        selected={ item.link === current }
                        onClick={ e => {
+                         setMobileOpen( false )
                          navigate( item.link )
                        }}>
                { item.icon ?
