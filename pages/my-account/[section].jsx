@@ -6,6 +6,7 @@ import Link from 'next/link'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
+import Button from '@mui/material/Button'
 // import Fab from '@mui/material/Fab'
 import SettingsIcon from '@mui/icons-material/Settings'
 import CalendarIcon from '@mui/icons-material/CalendarMonth'
@@ -41,7 +42,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 const sectionHelp = {
-  main: 'Browse the dashboard or select a section from the menu',
+  main: 'Pick something to do below or navigate from the menu',
   info: 'View or update your personal info',
   appointments: 'View your past and upcoming appointments below',
   schedule: 'Select an available appointment slot'
@@ -165,11 +166,36 @@ function MyAccount() {
         : section === 'schedule' ?
         <MySchedule />
         :<Grid container spacing={2}>
-            <Grid item xs={4}>
-              <Item>{
-                'Info'
-              }</Item>
+            <Grid item xs={12} md={4}>
+              <Link href="/my-account/appointments" passHref>
+                <Button variant="contained" fullWidth>
+                  View my past and upcoming appointments
+                </Button>
+              </Link>
             </Grid>
+            <Grid item xs={12} md={4}>
+              <Link href="/my-account/schedule" passHref>
+                <Button variant="contained" fullWidth>
+                  Schedule an appointment
+                </Button>
+              </Link>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <Link href="/my-account/settings" passHref>
+                <Button variant="contained" fullWidth>
+                  Manage my account
+                </Button>
+              </Link>
+            </Grid>
+           { ( userData.admin || userData.superuser )
+             ? (<Grid item xs={12} md={4}>
+                  <Link href="/admin" passHref>
+                    <Button variant="contained" fullWidth>
+                      Manage the site
+                    </Button>
+                </Link>
+                </Grid>)
+             : null }
           </Grid>
       }
       <ConfirmationDialog

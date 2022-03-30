@@ -57,7 +57,7 @@ export default function MyAccountSettings({ user, onUpdateUser, ...props }) {
       actions: [
         {
           label: "No. Yikes!",
-          handler: () => onConfirmDelete(),
+          handler: () => onCloseConfirm(),
         },
         {
           label: 'Yes. Burn it.',
@@ -73,16 +73,12 @@ export default function MyAccountSettings({ user, onUpdateUser, ...props }) {
     setConfirmOpen( false )
   }
 
-  const onConfirmDelete = async ( response ) => {
-    if ( response ) {
-      const res = await api._delete( `user/${ user.id }`)
-      if ( res.ok ) {
-        signOut({ callbackUrl: '/' })
-      }
-      onCloseConfirm()
-    } else {
-      onCloseConfirm()
+  const onConfirmDelete = async () => {
+    const res = await api._delete( `user/${ user.id }`)
+    if ( res.ok ) {
+      signOut({ callbackUrl: '/' })
     }
+    onCloseConfirm()
   }
 
   return (
